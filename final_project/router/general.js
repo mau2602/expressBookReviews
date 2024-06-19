@@ -34,20 +34,31 @@ public_users.get('/author/:author',function (req, res) {
     if(validAuthor){
     res.send(JSON.stringify(validAuthor))
     } else {
-    return res.status(300).json({message: "Yet to be implemented"});
+    return res.status(300).json({message: "Author not found. Try again"});
     }
 });
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    let title = req.params.title
+    let validTitle = Object.values(books).filter(book => book.title === title);
+    console.log(validTitle)
+    if(validTitle){
+    res.send(JSON.stringify(validTitle))
+    } else {
+    return res.status(300).json({message: "Title not found. Try again"});
+    }
 });
 
 //  Get book review
-public_users.get('/review/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+public_users.get('/reviews/:isbn',function (req, res) {
+    let isbn = req.params.isbn
+    console.log(isbn)
+    if(books.hasOwnProperty(isbn)){
+    res.send(JSON.stringify(books[isbn].reviews))
+    } else {
+    return res.status(300).json({message: "ISBN not found"})
+    }
 });
 
 module.exports.general = public_users;
