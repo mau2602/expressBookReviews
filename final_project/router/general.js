@@ -17,14 +17,25 @@ public_users.get('/',function (req, res) {
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
- });
+    isbn = req.params.isbn
+    if(books.hasOwnProperty(isbn)){
+    res.send(JSON.stringify(books[isbn]))
+    } else {
+    return res.status(300).json({message: "ISBN not found"})
+    }
+})
+ 
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+    let author = req.params.author
+    let validAuthor = Object.values(books).filter(book => book.author === author);
+    console.log(validAuthor)
+    if(validAuthor){
+    res.send(JSON.stringify(validAuthor))
+    } else {
+    return res.status(300).json({message: "Yet to be implemented"});
+    }
 });
 
 // Get all books based on title
