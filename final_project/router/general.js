@@ -50,7 +50,7 @@ public_users.get('/author/:author',function (req, res) {
     let author = req.params.author
     let validAuthor = Object.values(books).filter(book => book.author === author);
     console.log(validAuthor)
-    if(validAuthor){
+    if(validAuthor>0){
     res.send(JSON.stringify(validAuthor))
     } else {
     return res.status(300).json({message: "Author not found. Try again"});
