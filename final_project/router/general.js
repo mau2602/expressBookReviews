@@ -33,18 +33,26 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
-    res.send(JSON.stringify(books))
+public_users.get('/', function (req, res) {
+    const getBooks = new Promise((resolve, reject) => {
+        resolve(res.send(JSON.stringify(books)));
+      });
+      getBooks.then(() => console.log("Promise fulfilled"));
+
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
     isbn = req.params.isbn
     if(books.hasOwnProperty(isbn)){
-    res.send(JSON.stringify(books[isbn]))
+    const getBooksByIsbn = new Promise((resolve, reject)=> {
+        resolve(res.send(JSON.stringify(books[isbn]))) 
+    })
+    getBooksByIsbn.then(()=> console.log('Promise fulfilled'))
     } else {
-    return res.status(300).json({message: "ISBN not found"})
+        return res.status(300).json({message: "ISBN not found. Try again"});
     }
+    
 })
  
 // Get book details based on author
@@ -53,7 +61,10 @@ public_users.get('/author/:author',function (req, res) {
     let validAuthor = Object.values(books).filter(book => book.author === author);
     console.log(validAuthor)
     if(validAuthor.length > 0){
-    res.send(JSON.stringify(validAuthor))
+        const getBookByAuthor = new Promise((resolve, reject) => {
+            resolve (res.send(JSON.stringify(validAuthor)))
+        })
+        getBookByAuthor.then(()=> console.log('Promise fulfilled'))
     } else {
     return res.status(300).json({message: "Author not found. Try again"});
     }
@@ -63,9 +74,12 @@ public_users.get('/author/:author',function (req, res) {
 public_users.get('/title/:title',function (req, res) {
     let title = req.params.title
     let validTitle = Object.values(books).filter(book => book.title === title);
-    console.log(validTitle)
+
     if(validTitle.length > 0){
-    res.send(JSON.stringify(validTitle))
+        const getBooksByTitle = new Promise ((resolve, reject)=>{
+            resolve (res.send(JSON.stringify(validTitle)))
+        })
+        getBooksByTitle.then('Promise fulfilled')
     } else {
     return res.status(300).json({message: "Title not found. Try again"});
     }
