@@ -50,7 +50,7 @@ public_users.get('/author/:author',function (req, res) {
     let author = req.params.author
     let validAuthor = Object.values(books).filter(book => book.author === author);
     console.log(validAuthor)
-    if(validAuthor>0){
+    if(validAuthor.length > 0){
     res.send(JSON.stringify(validAuthor))
     } else {
     return res.status(300).json({message: "Author not found. Try again"});
@@ -62,7 +62,7 @@ public_users.get('/title/:title',function (req, res) {
     let title = req.params.title
     let validTitle = Object.values(books).filter(book => book.title === title);
     console.log(validTitle)
-    if(validTitle){
+    if(validTitle.length > 0){
     res.send(JSON.stringify(validTitle))
     } else {
     return res.status(300).json({message: "Title not found. Try again"});
