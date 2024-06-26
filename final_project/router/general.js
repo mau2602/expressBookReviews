@@ -6,6 +6,10 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
+       
+    const username = req.body.username;
+    const password = req.body.password; 
+
     const doesExist = (username)=>{
         let userswithsamename = users.filter((user)=>{
           return user.username === username
@@ -16,9 +20,7 @@ public_users.post("/register", (req,res) => {
           return false;
         }
       }
-    const username = req.body.username;
-    const password = req.body.password;
-  
+
     if (username && password) {
       if (!doesExist(username)) { 
         users.push({"username":username,"password":password});
@@ -81,3 +83,4 @@ public_users.get('/reviews/:isbn',function (req, res) {
 });
 
 module.exports.general = public_users;
+
